@@ -3,7 +3,7 @@ import React from "react"
 
 function PastTopics({ topic }) {
     return(
-        <ul>
+        <ul className= "topicCard">
             <li>
                 {topic.title} 
             </li>

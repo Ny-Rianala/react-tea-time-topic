@@ -29789,19 +29789,32 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 // import ThumbUp from "./ThumbUp.svg"
 // import ThumbDown from "./ThumbDown.svg"
 function NextTopics({
-  topic
+  topic,
+  setTopics,
+  nextTopics
 }) {
-  const [like, setLike] = (0, _react.useState)(0);
-  const [dislike, setDislike] = (0, _react.useState)(0);
+  const [] = (0, _react.useState)(topic.upvotes);
+  const [] = (0, _react.useState)(topic.downvotes);
+
+  function increment() {
+    topic.upvotes++;
+    setTopics([...nextTopics]);
+  }
+
+  function decrement() {
+    topic.downvotes++;
+    setTopics([...nextTopics]);
+  }
+
   return /*#__PURE__*/_react.default.createElement("ul", {
     className: "topicCard"
   }, topic.title, /*#__PURE__*/_react.default.createElement("div", {
     className: "addBtn"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "addBtn"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, like), /*#__PURE__*/_react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
     className: "add",
-    onClick: () => setLike(like + 1)
+    onClick: increment
   }, /*#__PURE__*/_react.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     height: "24",
@@ -29814,7 +29827,7 @@ function NextTopics({
     d: "M2 20h2c.55 0 1-.45 1-1v-9c0-.55-.45-1-1-1H2v11zm19.83-7.12c.11-.25.17-.52.17-.8V11c0-1.1-.9-2-2-2h-5.5l.92-4.65c.05-.22.02-.46-.08-.66-.23-.45-.52-.86-.88-1.22L14 2 7.59 8.41C7.21 8.79 7 9.3 7 9.83v7.84C7 18.95 8.05 20 9.34 20h8.11c.7 0 1.36-.37 1.72-.97l2.66-6.15z"
   }))), /*#__PURE__*/_react.default.createElement("button", {
     className: "add",
-    onClick: () => setDislike(dislike + 1)
+    onClick: decrement
   }, /*#__PURE__*/_react.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     height: "24",
@@ -29825,7 +29838,7 @@ function NextTopics({
     fill: "none"
   }), /*#__PURE__*/_react.default.createElement("path", {
     d: "M22 4h-2c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h2V4zM2.17 11.12c-.11.25-.17.52-.17.8V13c0 1.1.9 2 2 2h5.5l-.92 4.65c-.05.22-.02.46.08.66.23.45.52.86.88 1.22L10 22l6.41-6.41c.38-.38.59-.89.59-1.42V6.34C17 5.05 15.95 4 14.66 4h-8.1c-.71 0-1.36.37-1.72.97l-2.67 6.15z"
-  }))), /*#__PURE__*/_react.default.createElement("h1", null, dislike))));
+  }))), /*#__PURE__*/_react.default.createElement("h1", null, topic.downvotes))));
 }
 
 var _default = NextTopics;
@@ -29845,7 +29858,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function PastTopics({
   topic
 }) {
-  return /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, topic.title));
+  return /*#__PURE__*/_react.default.createElement("ul", {
+    className: "topicCard"
+  }, /*#__PURE__*/_react.default.createElement("li", null, topic.title));
 }
 
 var _default = PastTopics;
@@ -29873,7 +29888,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 const API_URL = "https://gist.githubusercontent.com/Pinois/93afbc4a061352a0c70331ca4a16bb99/raw/6da767327041de13693181c2cb09459b0a3657a1/topics.json";
 
 function TopicList() {
-  const [Topics, setTopics] = (0, _react.useState)([]);
+  const [nextTopics, setTopics] = (0, _react.useState)([]);
   const [pastTopics, setPastTopics] = (0, _react.useState)([]);
 
   const getTopics = async () => {
@@ -29891,7 +29906,16 @@ function TopicList() {
   (0, _react.useEffect)(() => {
     getTopics();
   }, []);
-  return /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Next Topics"), Topics.filter(topic => !topic.discussedOn).map(topic => /*#__PURE__*/_react.default.createElement(_NextTopics.default, {
+  return /*#__PURE__*/_react.default.createElement("article", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Next Topics"), nextTopics.sort((topicA, topicB) => {
+    const ratioA = topicA.upvotes - topicA.downvotes;
+    const ratioB = topicB.upvotes - topicB.downvotes;
+    return ratioB - ratioA;
+  }).map(topic => /*#__PURE__*/_react.default.createElement(_NextTopics.default, {
+    key: topic.id,
+    topic: topic,
+    nextTopics: nextTopics,
+    setTopics: setTopics
+  }))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Past Topics"), pastTopics.filter(topic => topic.discussedOn).map(topic => /*#__PURE__*/_react.default.createElement(_PastTopics.default, {
     key: topic.id,
     topic: topic
   }))));
