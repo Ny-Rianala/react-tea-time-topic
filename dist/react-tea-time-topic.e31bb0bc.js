@@ -29812,7 +29812,7 @@ function NextTopics({
     className: "addBtn"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "addBtn"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("h4", null, topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
     className: "add",
     onClick: increment
   }, /*#__PURE__*/_react.default.createElement("svg", {
@@ -29838,7 +29838,7 @@ function NextTopics({
     fill: "none"
   }), /*#__PURE__*/_react.default.createElement("path", {
     d: "M22 4h-2c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h2V4zM2.17 11.12c-.11.25-.17.52-.17.8V13c0 1.1.9 2 2 2h5.5l-.92 4.65c-.05.22-.02.46.08.66.23.45.52.86.88 1.22L10 22l6.41-6.41c.38-.38.59-.89.59-1.42V6.34C17 5.05 15.95 4 14.66 4h-8.1c-.71 0-1.36.37-1.72.97l-2.67 6.15z"
-  }))), /*#__PURE__*/_react.default.createElement("h1", null, topic.downvotes))));
+  }))), /*#__PURE__*/_react.default.createElement("h4", null, topic.downvotes))));
 }
 
 var _default = NextTopics;
@@ -29860,7 +29860,19 @@ function PastTopics({
 }) {
   return /*#__PURE__*/_react.default.createElement("ul", {
     className: "topicCard"
-  }, /*#__PURE__*/_react.default.createElement("li", null, topic.title));
+  }, /*#__PURE__*/_react.default.createElement("li", null, topic.title), /*#__PURE__*/_react.default.createElement("li", {
+    className: "delete"
+  }, /*#__PURE__*/_react.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: "24",
+    viewBox: "0 0 24 24",
+    width: "24"
+  }, /*#__PURE__*/_react.default.createElement("path", {
+    d: "M0 0h24v24H0z",
+    fill: "none"
+  }), /*#__PURE__*/_react.default.createElement("path", {
+    d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+  }))));
 }
 
 var _default = PastTopics;
@@ -29910,7 +29922,7 @@ function TopicList() {
     const ratioA = topicA.upvotes - topicA.downvotes;
     const ratioB = topicB.upvotes - topicB.downvotes;
     return ratioB - ratioA;
-  }).map(topic => /*#__PURE__*/_react.default.createElement(_NextTopics.default, {
+  }).filter(topic => !topic.discussedOn).map(topic => /*#__PURE__*/_react.default.createElement(_NextTopics.default, {
     key: topic.id,
     topic: topic,
     nextTopics: nextTopics,
@@ -29937,21 +29949,33 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function AddTopics() {
-  const [inputValue, setInputVAlue] = (0, _react.useState)("");
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Add Topics"), /*#__PURE__*/_react.default.createElement("input", {
+const AddTopics = () => {
+  const [inputValue, setinputValue] = _react.default.useState([]); // const [inputResult, setinpuResult] = React.useState([]);
+
+
+  const handleChange = event => {
+    setinputValue(event.target.value);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    setinputValue(inputValue); //   AddTopics.reset()
+
+    console.log("helllooo");
+  };
+
+  return /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/_react.default.createElement("h2", null, "Add Topics"), /*#__PURE__*/_react.default.createElement("label", null, /*#__PURE__*/_react.default.createElement("input", {
+    type: "text",
     value: inputValue,
-    onChange: e => {
-      if (!e.target.value.includes("r")) {
-        setInputVAlue(e.target.value);
-      }
-    }
-  }), /*#__PURE__*/_react.default.createElement("button", {
+    onChange: handleChange
+  })), /*#__PURE__*/_react.default.createElement("button", {
+    className: "submit",
     type: "submit",
-    onClick: inputValue && /*#__PURE__*/_react.default.createElement("p", null, inputValue),
-    className: "submit"
+    value: "Submit"
   }, "Submit"));
-}
+};
 
 var _default = AddTopics;
 exports.default = _default;
@@ -29972,7 +29996,7 @@ var _AddTopics = _interopRequireDefault(require("./AddTopics"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function App() {
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_AddTopics.default, null), /*#__PURE__*/_react.default.createElement(_TopicList.default, null));
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Tea Time Topics"), /*#__PURE__*/_react.default.createElement(_AddTopics.default, null), /*#__PURE__*/_react.default.createElement(_TopicList.default, null));
 }
 
 var _default = App;
@@ -30017,7 +30041,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56854" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55045" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

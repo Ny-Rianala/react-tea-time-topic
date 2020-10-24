@@ -37,11 +37,12 @@ function TopicList() {
                             const ratioA = topicA.upvotes - topicA.downvotes;
                             const ratioB = topicB.upvotes - topicB.downvotes;
                             return ratioB - ratioA;
-                     }) 
+                     }).filter((topic) => !topic.discussedOn) 
                     .map(( topic ) => (<NextTopics
-                        key={topic.id} topic= {topic} 
-                        nextTopics={nextTopics}
-                        setTopics={setTopics}
+                        key={topic.id} 
+                        topic= {topic} 
+                        nextTopics= {nextTopics}
+                        setTopics= {setTopics}
                         />)
                     )}
              </div>

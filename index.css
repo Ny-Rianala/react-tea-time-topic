@@ -35,14 +35,14 @@ body {
     border-radius: 5px;
 }
 
-button {
-    background-color: #FAAE2C;
-}
-
 
 input {
-    width: 420px;
-    height: 30px;
+    font-size: 1.6rem;
+    padding: 0.5rem 2rem;
+    line-height: 2.5rem;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    margin-bottom: 1rem;
 }
 
 
@@ -53,22 +53,41 @@ input {
     margin-left: 1rem;
     border: none;
     outline: none;
+    background-color: #FAAE2C;
+}
+
+
+ul {
+    position: relative;
+}
+
+.delete {
+    position: absolute;
+    left: 90%;
+    top: 20%;
 }
 
 .submit {
-    height: 50px;
-    width: 100px;
-    margin-left: 1rem;
-    border-radius: 20%;
+    background-color: #FAAE2C;
     border: none;
     outline: none;
+    padding: 0.5rem 1rem;
+    width: 100px;
+    height: 55px;
+    border: 1px solid rgba(0,0,0,0, 0.75);
+    border-radius: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: background-color 250ms;
 }
 
+/* 
 svg{
     fill: #00473E;
-}
+} */
 
-h1 {
+h4 {
     color: #D8779A;
     margin-bottom: 1rem;
 }
