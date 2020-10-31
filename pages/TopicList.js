@@ -24,6 +24,32 @@ function TopicList() {
        
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // console.log(event.currentTarget.add.value);
+        // const newTopic = {
+        //   title: event.currentTarget.add.value,
+        // }
+        const form = event.currentTarget.add.value;
+        console.log(form);
+
+        let newTopic = {
+          title: form,
+          id: Date.now(),
+          discussedOn: "",
+          downvotes: 0,
+          upvotes: 0,
+        }
+        
+        nextTopics.push(newTopic);
+        console.log(nextTopics);
+        setTopics([...nextTopics]);
+        // setinputValue(inputValue);
+      //   AddTopics.reset()
+        // console.log(event.target.title);
+      };
+      
+
 
     useEffect(() => {
         getTopics();
@@ -32,11 +58,18 @@ function TopicList() {
     return (
          <article>
              <div>
+             <form onSubmit={handleSubmit}>
+            <h2>Add Topics</h2>
+            <label>
+              <input type="text" name="add" />
+            </label>
+            <button className="submit" type="submit" value="Submit">Submit</button>  
+          </form>
              <h2>Next Topics</h2>
-                     {nextTopics.sort((topicA, topicB) => {
-                            const ratioA = topicA.upvotes - topicA.downvotes;
-                            const ratioB = topicB.upvotes - topicB.downvotes;
-                            return ratioB - ratioA;
+                     {nextTopics.sort((topicX, topicY) => {
+                            const ratioX = topicX.upvotes - topicX.downvotes;
+                            const ratioY = topicY.upvotes - topicY.downvotes;
+                            return ratioY - ratioX;
                      }).filter((topic) => !topic.discussedOn) 
                     .map(( topic ) => (<NextTopics
                         key={topic.id} 

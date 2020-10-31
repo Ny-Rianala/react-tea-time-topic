@@ -80,12 +80,20 @@ ul {
     cursor: pointer;
     margin-left: 1rem;
     transition: background-color 250ms;
+    box-shadow: 0 0 20px rgba(0,0,0,0, 0.4);
 }
 
-/* 
-svg{
+.save, .delete {
+    position: absolute;
+    top: 10%;
+    left: 80%;
+}
+
+
+ 
+/* svg{
     fill: #00473E;
-} */
+}  */
 
 h4 {
     color: #D8779A;
